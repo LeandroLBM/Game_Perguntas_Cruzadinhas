@@ -1,7 +1,55 @@
 * {
-    font-size: 25px;
+margin: 0;
+font-family: "Michroma", sans-serif;
+font-style: normal;
 }
 
 body {
     background-color: black;
+}
+
+.background1, .background2, .finalBar {
+    display: flex;
+    width: 100%;
+    height: 1080px;
+    background-size: cover;
+    background-position: center;
+}
+.background1 {
+    background-image: url("../imgs/Background/jogar_gif.gif");
+    align-items: end;
+    justify-content: center;
+}
+button {
+    background: none;
+    color: white;
+    border: 10px solid red;
+    width: 600px;
+    height: 100px;
+    font-weight: bold;
+    font-size: 50px;
+}
+.botao {
+    margin-bottom: 300px;
+}
+.background2 {
+    background-image: url("../imgs/Background/fogo_gif.gif");
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(100px);
+}
+.desc {
+    width: 1200px;
+    height: 750px;
+    border: solid white;
+}
+.finalBar {
+    display: flex;
+    height: 50px;
+    background-color: black;
+    border: solid red;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
