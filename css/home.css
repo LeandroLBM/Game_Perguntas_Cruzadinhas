@@ -28,9 +28,14 @@ button {
     height: 100px;
     font-weight: bold;
     font-size: 50px;
+    cursor: pointer;
 }
 .botao {
     margin-bottom: 300px;
+}
+button:hover {
+background: red;
+color: black;
 }
 .background2 {
     background-image: url("../imgs/Background/fogo_gif.gif");
@@ -42,6 +47,7 @@ button {
     width: 1200px;
     height: 750px;
     border: solid white;
+    backdrop-filter: blur(100px);
 }
 .finalBar {
     display: flex;
