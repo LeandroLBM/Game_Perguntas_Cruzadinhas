@@ -15,15 +15,15 @@
 <body>
     <div class="quadrinho">
         <div class="part1">
-            <div class="img1"></div>
-            <div class="img2"></div>
-            <div class="img3"></div>
+            <div id="img1" class="img1"></div>
+            <div id="img2" class="img2"></div>
+            <div id="img3" class="img3"></div>
         </div>
         <div class="part2">
-            <div class="img4"></div>
-            <div class="img5"></div>
-            <div class="img6">
-                <a>
+            <div id="img4" class="img4"></div>
+            <div id="img5" class="img5"></div>
+            <div id="img6" class="img6">
+                <a id="proximo">
                     <button onclick="botao()">JOGAR</button>
                 </a>
             </div>
@@ -33,4 +33,24 @@
 
 </html>
 <script>
+    let numero = 0;
+
+    let intervalor = setInterval(() => {
+        numero++;
+        if (numero === 1) {
+            img1.style.backgroundImage = `url('./imgs/Loading/img1.png')`;
+        } else if (numero === 2) {
+            img2.style.backgroundImage = `url('./imgs/Loading/img2.png')`;
+        } else if (numero === 3) {
+            img3.style.backgroundImage = `url('./imgs/Loading/img3.png')`;
+        } else if (numero === 4) {
+            img4.style.backgroundImage = `url('./imgs/Loading/img4.png')`;
+        } else if (numero === 5) {
+            img5.style.backgroundImage = `url('./imgs/Loading/img5.png')`;
+        } else if (numero === 6) {
+            clearInterval(intervalor);
+            img6.style.backgroundImage = `url('./imgs/Loading/img6.png')`;
+            proximo.style.display = "flex"
+        }
+    }, 1000);
 </script>
