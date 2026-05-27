@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
+    <title>Game: I Need Help</title>
+    <link rel="stylesheet" href="./css/game.css">
+</head>
+
+<body>
+    <div id="janela">
+        <h2 id="pergunta"></h2>
+        <div id="opcoes"></div>
+        <button onclick="proximaPergunta()">Responder</button>
+    </div>
+    <div id="vida">
+        Vida: <span id="valorVida">3</span>
+    </div>
+    <div id="pontos">
+        Pontos: <span id="valorPontos">500</span>
+    </div>
+    <button id="btnLoja" onclick="abrirLoja()">Loja</button>
+
+    <div id="loja">
+        <h2>Loja</h2>
+        <div class="item">
+            <img src="./imgs/icons/Saude_extra_icon.png" alt="Vida" width="100">
+            <p>Vida Extra (+1 vida)</p>
+            <p>Preço: 500 pontos</p>
+            <button onclick="comprarVida()">Comprar</button>
+        </div>
+        <div class="item">
+            <img src="./imgs/icons/vida_extra_icon.png" alt="Reviver" width="100">
+            <p>Segunda Chance</p>
+            <p>Permite jogar novamente ao morrer</p>
+            <p>Preço: 500 pontos</p>
+            <button onclick="comprarRevive()">Comprar</button>
+        </div>
+        <div class="item">
+            <img src="./imgs/icons/visão_extra_icon.png" alt="Dica" width="100">
+            <p>Dica Colorida</p>
+            <p>Pequena chance da resposta correta mudar de cor</p>
+            <p>Preço: 1000 pontos</p>
+            <button onclick="comprarDica()">Comprar</button>
+        </div>
+        <button onclick="fecharLoja()">Fechar Loja</button>
+</body>
+<script>
+    let revive = false;
+    let dicaColorida = false;
+    let atual = 0;
+    let vida = 3;
+    let pontos = 500;
+    const perguntas = [
+
+        {
+            pergunta: "1. Qual é a principal função da CPU em um sistema computacional?",
+            opcoes: [
+                "Armazenar componentes de hardware",
+                "Executar instruções e controlar operações do sistema",
+                "Fazer somente cálculos",
+                "Controlar dispositivos"
+            ],
+            correta: 1
+        },
+
+        {
+            pergunta: "2. A Unidade Lógica e Aritmética (ULA) participa diretamente",
+            opcoes: [
+                "Do armazenamento permanente de dados",
+                "Da execução de operações matemáticas e comparações lógicas",
+                "Da inicialização da BIOS",
+                "Do gerenciamento da memória Flash"
+            ],
+            correta: 1
+        },
+
+        {
+            pergunta: "3. Os registradores são importantes porque",
+            opcoes: [
+                "Possuem alta velocidade de acesso dentro da CPU",
+                "Funcionam como memória secundária",
+                "Substituem a memória RAM",
+                "Armazenam arquivos do sistema operacional"
+            ],
+            correta: 0
+        },
+
+        {
+            pergunta: "4. Qual característica pertence à memória RAM?",
+            opcoes: [
+                "Armazenamento permanente",
+                "Memória não volátil",
+                "Armazenamento temporário usado durante a execução de programas",
+                "Utilização exclusiva na BIOS"
+            ],
+            correta: 2
+        },
+
+        {
+            pergunta: "5. A ROM é essencial porque",
+            opcoes: [
+                "Guarda instruções importantes de inicialização do sistema",
+                "Armazena dados temporários da CPU",
+                "É usada apenas em placas de vídeo",
+                "Funciona somente durante o uso da internet"
+            ],
+            correta: 0
+        },
+
+        {
+            pergunta: "6. Qual é a principal vantagem da memória Flash?",
+            opcoes: [
+                "Não pode ser apagada",
+                "Mantém os dados mesmo sem energia elétrica",
+                "Funciona apenas em HDs antigos",
+                "É mais lenta que a fita magnética"
+            ],
+            correta: 1
+        },
+
+        {
+            pergunta: "7. O DMA melhora o desempenho do sistema porque",
+            opcoes: [
+                "Elimina totalmente a CPU",
+                "Permite transferência direta de dados entre periféricos e memória",
+                "Diminui a capacidade da RAM",
+                "Aumenta fisicamente os registradores"
+            ],
+            correta: 1
+        },
+
+        {
+            pergunta: "8. Durante uma operação DMA",
+            opcoes: [
+                "A CPU autoriza o acesso direto do periférico à memória",
+                "O barramento de dados é desativado",
+                "A RAM deixa de funcionar",
+                "Apenas o teclado utiliza DMA"
+            ],
+            correta: 0
+        },
+
+        {
+            pergunta: "9. O Chip Select (CS) é utilizado para",
+            opcoes: [
+                "Definir qual dispositivo será ativado na comunicação",
+                "Aumentar a frequência da CPU",
+                "Armazenar dados temporários",
+                "Melhorar a velocidade da internet"
+            ],
+            correta: 0
+        },
+
+        {
+            pergunta: "10. O barramento de endereços (Address Bus)",
+            opcoes: [
+                "Transporta exclusivamente dados binários",
+                "Indica onde os dados devem ser lidos ou gravados na memória",
+                "Faz operações matemáticas",
+                "Armazena programas do sistema operacional"
+            ],
+            correta: 1
+        },
+
+        {
+            pergunta: "11. O aumento da largura do Address Bus permite",
+            opcoes: [
+                "Acesso a maior quantidade de memória",
+                "Redução do desempenho do sistema",
+                "Menor velocidade de processamento",
+                "Redução do espaço de endereçamento"
+            ],
+            correta: 0
+        },
+
+        {
+            pergunta: "12. O Data Bus é responsável por",
+            opcoes: [
+                "Selecionar registradores da CPU",
+                "Transferir dados entre os componentes do computador",
+                "Controlar o clock do sistema",
+                "Fazer backup automático da memória"
+            ],
+            correta: 1
+        },
+
+        {
+            pergunta: "13. Os processadores Intel Core i5 e i7 pertencem",
+            opcoes: [
+                "À linha de processadores desenvolvida pela AMD",
+                "À família de processadores da Intel",
+                "Aos primeiros processadores de 8 bits",
+                "Apenas a servidores industriais"
+            ],
+            correta: 1
+        },
+
+        {
+            pergunta: "14. Comparado ao i5, o Intel Core i7 normalmente apresenta",
+            opcoes: [
+                "Menor desempenho multitarefa",
+                "Mais cache e maior quantidade de threads",
+                "Ausência de múltiplos núcleos",
+                "Menor velocidade de processamento"
+            ],
+            correta: 1
+        },
+
+        {
+            pergunta: "15. Um processador dual core é caracterizado por:",
+            opcoes: [
+                "Possuir dois núcleos de processamento",
+                "Ter duas memórias ROM",
+                "Operar apenas em 32 bits",
+                "Utilizar dois sistemas operacionais simultaneamente"
+            ],
+            correta: 0
+        },
+
+        {
+            pergunta: "16. Processadores quad core oferecem:",
+            opcoes: [
+                "Quatro fontes independentes",
+                "Quatro núcleos capazes de melhorar o processamento multitarefa",
+                "Quatro memórias cache externas obrigatórias",
+                "Menor capacidade de execução paralela"
+            ],
+            correta: 1
+        }
+
+    ];
+    function comprarRevive() {
+        if (pontos >= 500) {
+            pontos -= 500;
+            revive = true;
+            atualizarHUD();
+        }
+    }
+
+    function comprarDica() {
+        if (pontos >= 1000) {
+            pontos -= 1000;
+            dicaColorida = true;
+            atualizarHUD();
+        }
+    }
+    function comprarVida() {
+        if (pontos >= 200) {
+            pontos -= 200;
+            vida++;
+            atualizarHUD();
+            alert("Vida comprada!");
+        } else {
+            alert("Pontos insuficientes!");
+        }
+    }
+    const pergunta = document.getElementById("pergunta");
+    const opcoes = document.getElementById("opcoes");
+
+    function carregarPergunta() {
+        pergunta.innerText = perguntas[atual].pergunta;
+        opcoes.innerHTML = "";
+        let mostrarDica = false;
+        if (dicaColorida) {
+            const chance = Math.random();
+            if (chance <= 0.25) {
+                mostrarDica = true;
+            }
+        }
+        perguntas[atual].opcoes.forEach((opcao, i) => {
+            let cor = "white";
+            if (mostrarDica && i === perguntas[atual].correta) {
+                cor = "lime";
+            }
+            opcoes.innerHTML += `
+            <label style="color:${cor}">
+                <input type="radio" name="resposta" value="${i}">
+                ${opcao}
+            </label>
+        `;
+        });
+    }
+    function proximaPergunta() {
+        const resposta = document.querySelector('input[name="resposta"]:checked');
+        if (!resposta) {
+            return;
+        }
+        if (Number(resposta.value) === perguntas[atual].correta) {
+            pontos += 100;
+            atual++;
+        } else {
+            vida--;
+            if (vida <= 0) {
+                if (revive) {
+                    revive = false;
+                    vida = 1;
+                    atualizarHUD();
+                    return;
+                }
+                alert("Game Over!");
+                location.reload();
+                return;
+            }
+            atual++;
+        }
+        atualizarHUD();
+        if (atual >= perguntas.length) {
+            alert("Você terminou o quiz!");
+            location.reload();
+            return;
+        }
+        carregarPergunta();
+    }
+    function abrirLoja() {
+        document.getElementById("loja").style.display = "block";
+    }
+    function fecharLoja() {
+        document.getElementById("loja").style.display = "none";
+    }
+    function atualizarHUD() {
+        document.getElementById("valorVida").innerText = vida;
+        document.getElementById("valorPontos").innerText = pontos;
+    }
+    carregarPergunta();
+    atualizarHUD();
+</script>
+
+</html>

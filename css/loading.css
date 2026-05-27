@@ -31,7 +31,8 @@ width: 640px;
 height: 540px;
 background-color: black;
 background-position: center;
-background-size: cover;
+background-size: contain;
+background-repeat: no-repeat;
 }
 .img6 {
 display: flex;
