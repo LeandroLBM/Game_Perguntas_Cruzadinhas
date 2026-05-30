@@ -7,6 +7,9 @@ font-style: normal;
 body {
     background-color: black;
 }
+a {
+ text-decoration: none;
+}
 .quadrinho {
     width: 100%;
     height: 1080px;

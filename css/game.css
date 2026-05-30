@@ -77,7 +77,8 @@ button {
 }
 
 button:hover {
-    background: #0088cc;
+    background: yellow;
+    color: black;
     transform: scale(1.05);
 }
 
@@ -135,23 +136,27 @@ button:hover {
     margin-top: 20px;
 }
 
-@media (max-width: 768px) {
+#janela,
+#loja {
+    width: 90%;
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+#janela button {
+    width: 100%;
+    padding: 12px;
+}
+#loja button {
+    width: auto;
+    padding: 8px 12px;
+}
 
-    #janela,
-    #loja {
-        width: 95%;
-        padding: 20px;
-    }
+#pergunta {
+    font-size: 18px;
+}
 
-    #pergunta {
-        font-size: 18px;
-    }
-
-    button {
-        width: 100%;
-    }
-
-    .item img {
-        width: 80px;
-    }
+.item img {
+    width: 80px;
 }

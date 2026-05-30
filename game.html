@@ -50,13 +50,15 @@
         <button onclick="fecharLoja()">Fechar Loja</button>
     </div>
     <div id="vitoria" class="tela-vitoria">
-        <img src="img/vitoria.png" width="300">
-        <h2>Você terminou o quiz!</h2>
-        <button onclick="reiniciarJogo()">Jogar novamente</button>
+        <img src="./imgs/Loading/vitoria.jpg" width="300">
+        <h2>Acho que sabemos o que fazer!</h2>
+        <a href="./home.html">
+            <button onclick="home()">Tela inicial</button>
+        </a>
     </div>
     <div id="derrota" class="tela-derrota">
-        <img src="img/derrota.png" width="300">
-        <h2>Game Over!</h2>
+        <img src="./imgs/Loading/derrota.jpg" width="300">
+        <h2>Pelo visto você está sem solução 💀</h2>
         <button onclick="reiniciarJogo()">Jogar novamente</button>
     </div>
 </body>
@@ -353,19 +355,19 @@
         carregarPergunta();
     }
 
-    function reiniciarJogo() {
-        atual = 0;
-        pontos = 0;
-        vida = 3;
-        revive = false;
-        dicaColorida = false;
+function reiniciarJogo() {
+    atual = 0;
+    pontos = 500;
+    vida = 3;
+    revive = false;
+    dicaColorida = false;
 
-        document.getElementById("derrota").style.display = "none";
-        document.getElementById("vitoria").style.display = "none";
+    document.getElementById("derrota").style.display = "none";
+    document.getElementById("vitoria").style.display = "none";
 
-        atualizarHUD();
-        carregarPergunta();
-    }
+    atualizarHUD();
+    carregarPergunta();
+}
 
     function abrirLoja() {
         document.getElementById("loja").style.display = "block";
