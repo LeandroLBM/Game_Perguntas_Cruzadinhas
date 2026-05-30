@@ -42,12 +42,23 @@
         </div>
         <div class="item">
             <img src="./imgs/icons/visão_extra_icon.png" alt="Dica" width="100">
-            <p>Dica Colorida</p>
+            <p>X-Ray</p>
             <p>Pequena chance da resposta correta mudar de cor</p>
             <p>Preço: 1000 pontos</p>
             <button onclick="comprarDica()">Comprar</button>
         </div>
         <button onclick="fecharLoja()">Fechar Loja</button>
+    </div>
+    <div id="vitoria" class="tela-vitoria">
+        <img src="img/vitoria.png" width="300">
+        <h2>Você terminou o quiz!</h2>
+        <button onclick="reiniciarJogo()">Jogar novamente</button>
+    </div>
+    <div id="derrota" class="tela-derrota">
+        <img src="img/derrota.png" width="300">
+        <h2>Game Over!</h2>
+        <button onclick="reiniciarJogo()">Jogar novamente</button>
+    </div>
 </body>
 <script>
     let revive = false;
@@ -234,6 +245,7 @@
         }
 
     ];
+
     function comprarRevive() {
         if (pontos >= 500) {
             pontos -= 500;
@@ -249,6 +261,7 @@
             atualizarHUD();
         }
     }
+
     function comprarVida() {
         if (pontos >= 200) {
             pontos -= 200;
@@ -259,73 +272,114 @@
             alert("Pontos insuficientes!");
         }
     }
+
     const pergunta = document.getElementById("pergunta");
     const opcoes = document.getElementById("opcoes");
 
     function carregarPergunta() {
+        opcoes.innerHTML = "";
         pergunta.innerText = perguntas[atual].pergunta;
         opcoes.innerHTML = "";
+
         let mostrarDica = false;
+
         if (dicaColorida) {
             const chance = Math.random();
+
             if (chance <= 0.25) {
                 mostrarDica = true;
             }
         }
-        perguntas[atual].opcoes.forEach((opcao, i) => {
+
+        for (let i = 0; i < perguntas[atual].opcoes.length; i++) {
             let cor = "white";
+
             if (mostrarDica && i === perguntas[atual].correta) {
                 cor = "lime";
             }
+
             opcoes.innerHTML += `
             <label style="color:${cor}">
                 <input type="radio" name="resposta" value="${i}">
-                ${opcao}
+                ${perguntas[atual].opcoes[i]}
             </label>
         `;
-        });
-    }
-    function proximaPergunta() {
-        const resposta = document.querySelector('input[name="resposta"]:checked');
-        if (!resposta) {
-            return;
         }
+    }
+
+    function proximaPergunta() {
+        let resposta = null;
+
+        const opcoesMarcadas = document.getElementsByName("resposta");
+
+        for (let i = 0; i < opcoesMarcadas.length; i++) {
+            if (opcoesMarcadas[i].checked) {
+                resposta = opcoesMarcadas[i];
+            }
+        }
+
+        if (resposta == null) return;
+
         if (Number(resposta.value) === perguntas[atual].correta) {
             pontos += 100;
             atual++;
         } else {
             vida--;
+
             if (vida <= 0) {
                 if (revive) {
                     revive = false;
                     vida = 1;
                     atualizarHUD();
+                    carregarPergunta();
                     return;
                 }
-                alert("Game Over!");
-                location.reload();
+
+                atualizarHUD();
+                document.getElementById("derrota").style.display = "flex";
                 return;
             }
+
             atual++;
         }
-        atualizarHUD();
+
         if (atual >= perguntas.length) {
-            alert("Você terminou o quiz!");
-            location.reload();
+            atualizarHUD();
+            document.getElementById("vitoria").style.display = "flex";
             return;
         }
+
+        atualizarHUD();
         carregarPergunta();
     }
+
+    function reiniciarJogo() {
+        atual = 0;
+        pontos = 0;
+        vida = 3;
+        revive = false;
+        dicaColorida = false;
+
+        document.getElementById("derrota").style.display = "none";
+        document.getElementById("vitoria").style.display = "none";
+
+        atualizarHUD();
+        carregarPergunta();
+    }
+
     function abrirLoja() {
         document.getElementById("loja").style.display = "block";
     }
+
     function fecharLoja() {
         document.getElementById("loja").style.display = "none";
     }
+
     function atualizarHUD() {
         document.getElementById("valorVida").innerText = vida;
         document.getElementById("valorPontos").innerText = pontos;
     }
+
     carregarPergunta();
     atualizarHUD();
 </script>

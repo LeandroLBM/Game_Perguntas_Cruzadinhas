@@ -48,6 +48,13 @@ color: black;
     height: 750px;
     border: solid white;
     backdrop-filter: blur(100px);
+    color: white;
+    font-size: 25px;
+    text-align: center;
+}
+img {
+    height: 100px;
+    width: 100px;
 }
 .finalBar {
     display: flex;
